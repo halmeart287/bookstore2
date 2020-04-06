@@ -5,19 +5,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import hh.swd20.bookstore2.domain.Book;
 import hh.swd20.bookstore2.domain.BookRepository;
+import hh.swd20.bookstore2.domain.CategoryRepository;
 
 @Controller
 public class BookController {
 	
 	@Autowired
-	BookRepository bookRepository;
+	private BookRepository bookRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String getBookstoreIndex(Model model) {
@@ -34,6 +37,7 @@ public class BookController {
 	@RequestMapping(value = "/addbook", method = RequestMethod.GET)
 	public String getBookForm(Model model) {
 		model.addAttribute("book", new Book());
+		model.addAttribute("categories", categoryRepository.findAll());
 		return "addbook";
 	}
 
@@ -43,15 +47,16 @@ public class BookController {
 		return "redirect:/books";
 	}
 	
-	@RequestMapping(value = "/deletebook/{id}", method = RequestMethod.GET)
-	public String deleteBook(@PathVariable("id") Long bookId) {
+	@RequestMapping(value = "/deletebook/{bookId}", method = RequestMethod.GET)
+	public String deleteBook(@PathVariable("bookId") Long bookId) {
 		bookRepository.deleteById(bookId);
 		return "redirect:../books";
 	}
 	
-	@RequestMapping(value = "/editbook/{id}", method = RequestMethod.GET)
-	public String editBook(@PathVariable("id") Long bookId, Model model) {
+	@RequestMapping(value = "/editbook/{bookId}", method = RequestMethod.GET)
+	public String editBook(@PathVariable("bookId") Long bookId, Model model) {
 		model.addAttribute("book", bookRepository.findById(bookId));
+		model.addAttribute("categories", categoryRepository.findAll());
 		return "editbook";
 	}
 	

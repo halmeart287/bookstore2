@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import hh.swd20.bookstore2.domain.Book;
 import hh.swd20.bookstore2.domain.Category;
 import hh.swd20.bookstore2.domain.CategoryRepository;
 
@@ -16,7 +15,7 @@ import hh.swd20.bookstore2.domain.CategoryRepository;
 public class CategoryController {
 	
 	@Autowired
-	CategoryRepository categoryRepository;
+	private CategoryRepository categoryRepository;
 	
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
 	public String getCategoryList(Model model) {

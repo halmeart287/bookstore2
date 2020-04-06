@@ -1,27 +1,34 @@
 package hh.swd20.bookstore2.domain;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Category {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long categoryId;
 	private String name;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+	private List<Book> books;
 
 	public Category() {
 		super();
-		this.id = null;
+		this.categoryId = null;
 		this.name = null;
 	}
 
-	public Category(Long id, String name) {
+	public Category(Long categoryId, String name) {
 		super();
-		this.id = id;
+		this.categoryId = categoryId;
 		this.name = name;
 	}
 
@@ -30,12 +37,12 @@ public class Category {
 		this.name = name;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getCategoryId() {
+		return categoryId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setCategoryId(Long id) {
+		this.categoryId = id;
 	}
 
 	public String getName() {
@@ -46,9 +53,17 @@ public class Category {
 		this.name = name;
 	}
 
+	public List<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
+
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", name=" + name + "]";
+		return "Category [categoryId=" + categoryId + ", name=" + name + "]";
 	}
 
 }

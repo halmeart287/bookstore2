@@ -9,7 +9,7 @@
 	<h2>Edit selected book:</h2>
 	<form action="#" th:action="@{/savebook}" th:object=${book}
 		method="post">
-		<input type=hidden th:field="${book.id}" />
+		<input type=hidden th:field="${book.bookId}" />
 		<p>
 			Title: <input type="text" th:field="${book.title}" />
 		</p>
@@ -24,6 +24,13 @@
 		</p>
 		<p>
 			Price: <input type="text" th:field="${book.price}" />
+		</p>
+		<p>
+			Category: <select id="catlist" th:field="*{category}"
+				class="form-control">
+				<option th:each="category: ${categories}"
+					th:value="${category.categoryId}" th:text="${category.name}"></option>
+			</select>
 		</p>
 
 		<input type="submit" value="Submit" />
